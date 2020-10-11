@@ -10,9 +10,6 @@ class Content {
 
   // show movie information from search
   contentMovie(results, genres) {
-
-
-
     // -----------search titles---------------------
     const search = document.getElementById('search-movie');
     const matches = results.total_results;
@@ -28,15 +25,14 @@ class Content {
     } else if (results.total_results === 1) {
       searchedFor.innerHTML = `
       <h5>You searched for "${search.value}"</h5>
-      <h5 class="text-light">There is ${matches} matching result:</h5>
+      <h5 class="text-light font-italic">There is ${matches} matching result:</h5>
       `;
 
     } else if (results.total_results <= 10) {
       searchedFor.innerHTML = `
       <h5>You searched for "${search.value}"</h5>
-      <h5 class="text-light">There are ${matches} matching results:</h5>
+      <h5 class="text-light font-italic">There are ${matches} matching results:</h5>
       `;
-
 
     } else {
       searchedFor.innerHTML = `
@@ -53,35 +49,33 @@ class Content {
   }
 
   contentCard(results, genres) {
-    // console.log(genres);
     // ---------clear the content----------------
     allMovies.innerHTML = '';
     let x = 0;
 
-
     if (results.total_results <= 10 && results.total_results > 0) {
       x = results.total_results;
-
 
     } else if (results.total_results > 10) {
       x = 10;
     }
 
-
     for (let i = 0; i < x; i++) {
+      // to set ID of button
+      const btnId = results.results[i].title.split(' ').join('');
 
       allMovies.innerHTML += `
-      <div class="card-body border-top" id="movie-card">
-      <h4 class="card-title d-inline">${results.results[i].title}</h4>
-      <div class="media mt-2">
-        <img class="mr-3 mt-1 imageStyle"
+      <div class="card-body border-top">
+        <h4 class="card-title d-inline listTitle">${results.results[i].title}</h4>
+        <div class="media mt-2">
+          <img class="mr-3 mt-1 imageStyle"
           src="https://image.tmdb.org/t/p/original${results.results[i].poster_path}">
-        <div class="media-body">
-          <h6 class="mt-3 mb-5">Release date: ${results.results[i].release_date}</h6>
+          <div class="media-body">
+             <h6 class="mt-3 mb-5">Release date: ${results.results[i].release_date}</h6>
 
           <h6 class="mb-5">Average vote: ${results.results[i].vote_average}</h6>
 
-          <button class="btn btn-success mt-4 d-block" id="btn-add">Add to List</button>
+          <button class="btn btn-success mt-4 d-block btn-add" id="${btnId}">Add to List</button>
 
         </div>
       </div>         
@@ -89,11 +83,8 @@ class Content {
       </div>
 `;
 
-
-
       const ul = document.createElement('ul');
       ul.className = 'px-2';
-
 
       // loop through here for the genres adding li
       for (let j = 0; j < genres.genres.length; j++) {
@@ -104,19 +95,10 @@ class Content {
             // console.log(genres);
             li.className = ' badge badge-pill badge-primary py-2 px-3 mx-2 mb-3';
             ul.appendChild(li);
-
           }
         }
-
-
-
-
       }
-
-
-
       allMovies.appendChild(ul);
-
 
       allMovies.innerHTML += `
 <div class="mx-3 mb-4">
@@ -124,44 +106,58 @@ class Content {
 <p class="card-text">${results.results[i].overview}</p>
 </div>
 `;
-
-
     }
   }
 
   // add to this.titleswatchlist array-----------------------------------------------
-  addToWatchlist(image, title, types) {
+  addToWatchlist(btn, image, title, types) {
+    // console.log(btn, image, title, types);
+    if (btn.classList.contains('btn-danger')) {
+      this.changeBtnAdd(btn.id, false);
+    } else {
+      this.titlesWatchlist.push(title);
+      this.addToDropDown(image, title, types);
+      // console.log(btn.id);
+      this.changeBtnAdd(btn.id, true);
+    }
+
+
 
     // need to loop through the watchlist and check not already there
 
-    let i = 0;
-    if (this.titlesWatchlist.length === 0) {
-      this.titlesWatchlist.push(title);
-      this.addToDropDown(image, title, types);
-    } else {
-      this.titlesWatchlist.forEach(function (item) {
+    // START OF ORIGINAL-----------
+    // let i = 0;
 
-        if (item === title) {
 
-          console.log('already added');
-          $('#modal-added').modal('show')
+    // if (this.titlesWatchlist.length === 0) {
+    //   this.titlesWatchlist.push(title);
+    //   this.addToDropDown(image, title, types);
+    //    // change button classes here
+    //   // this.changeBtnAdd(true, title);
+    // } else {
+    //   this.titlesWatchlist.forEach(function (item) {
 
-          i++;
-        }
+    //     if (item === title) {
+    //       // console.log('already added');
+    //       $('#modal-added').modal('show')
+    //       i++;
+    //     }
 
-      });
-      if (i === 0) {
-        this.titlesWatchlist.push(title);
-        this.addToDropDown(image, title, types);
-      }
-      console.log(this.titlesWatchlist);
-    }
+    //   });
+    //   if (i === 0) {
+    //     this.titlesWatchlist.push(title);
+    //     this.addToDropDown(image, title, types);
+    //   }
+    //   // console.log(this.titlesWatchlist);
+    // }
+
+    // END OF ORIGINAL
   }
 
 
   //---------add to the wishlist dropdown if not already there
   addToDropDown(image, title, types) {
-    // the new title already added to titlesWatchlist so remove text for when it's empty when there is just one addition to the array
+
     if (this.titlesWatchlist.length === 1) {
       watchCard.innerHTML = '';
     }
@@ -193,8 +189,6 @@ class Content {
 
     const mediaBody = document.getElementById(image);
     mediaBody.appendChild(ul);
-
-
   }
 
 
@@ -208,22 +202,24 @@ class Content {
       backdrop: 'static',
       keyboard: false
     });
-
-
-
   }
 
   deleteFromWatchlist() {
-
     const remove = document.querySelector('.remove-div');
     const modalTitle = document.getElementById('modal-title');
+
     const titleString = modalTitle.firstChild.textContent;
+    const btnId = titleString.split(' ').join('');
+
     const index = content.titlesWatchlist.indexOf(titleString);
     if (index > -1) {
       content.titlesWatchlist.splice(index, 1);
     }
     $('#modal-delete').modal('hide')
     remove.remove();
+
+    content.changeBtnAdd(btnId, false);
+
     if (content.titlesWatchlist.length === 0) {
       watchCard.innerHTML = `<h6 id="empty-title">Your WatchList is empty</h6>`;
     }
@@ -235,5 +231,47 @@ class Content {
     $('#modal-delete').modal('hide')
   }
 
+  changeBtnAdd(btnId, added) {
+    const btn = document.getElementById(btnId);
+    if (added) {
+
+      btn.className = 'btn btn-danger mt-4 d-block';
+      btn.textContent = 'Remove from Watchlist'
+
+    } else if (added === false) {
+      btn.className = 'btn btn-success mt-4 d-block';
+      btn.textContent = 'Add to Watchlist'
+    }
+  }
+
+  selectDeleteAll() {
+    $('#modal-delete-all').modal({
+      backdrop: 'static',
+      keyboard: false
+    });
+  }
+
+  deleteAllWatchlist() {
+    $('#modal-delete-all').modal('hide')
+    watchCard.innerHTML = `<h6 id="empty-title">Your WatchList is empty</h6>`;
+    content.titlesWatchlist = [];
+    console.log(content.titlesWatchlist);
+
+    const btns = document.getElementsByClassName('btn-danger');
+    const btnArray = [];
+
+    for (let i = 0; i < btns.length; i++) {
+      btnArray.push(btns[i].id);
+    }
+
+    btnArray.forEach(function (id) {
+      for (let i = 0; i < btns.length; i++) {
+        if (id === btns[i].id) {
+          btns[i].innerText = 'Add to Watchlist';
+          btns[i].className = 'btn btn-success mt-4 d-block';
+        }
+      }
+    });
+  }
 
 }

@@ -6,11 +6,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/cyborg/bootstrap.min.css"
     integrity="sha384-nEnU7Ae+3lD52AK+RGNzgieBWMnEfgTbRHIwEvp1XXPdqdO6uLTd/NwXbzboqjc2" crossorigin="anonymous">
+  <!-- <link href="https://fonts.googleapis.com/css2?family=Sriracha&display=swap" rel="stylesheet"> -->
+  <link href="https://fonts.googleapis.com/css2?family=Secular+One&family=Sriracha&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/3116385fbd.js" crossorigin="anonymous"></script>
   <style>
     .movieHeader {
       background-image: url("film.PNG");
       background-size: cover;
+      font-family: 'Sriracha', cursive;
+    }
+
+    h1 {
+      font-size: 80px;
+    }
+
+    label {
+      font-family: 'Secular One', sans-serif;
+      font-size: 20px;
     }
 
     .imageStyle {
@@ -37,16 +49,16 @@
       font-weight: bold;
       font-size: 16px;
     }
+
     /* .modal-dialog{
       background-color: red;
     } */
-     #modal-delete .modal-content{
+    #modal-delete .modal-content {
       background-color: red;
       opacity: 0.9;
       color: black;
-      font-size: 20px;      
-    } 
-    
+      font-size: 20px;
+    }
   </style>
   <title>MyMovies</title>
 </head>
@@ -95,6 +107,10 @@
                   data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                   My WatchList
                 </button>
+                <button id="btn-clear-watchlist" class="btn btn-outline-warning float-right" data-toggle="collapse"
+                  data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                  Clear WatchList
+                </button>
               </h5>
             </div>
 
@@ -119,17 +135,17 @@
             </div>
           </div>
 
-        </div>      
+        </div>
 
 
 
         <!-- Movie Info HARD CODED-->
 
         <div class="card mx-auto" id="all-movies">
-
-          <!-- <div class="card-body" id="movie-card"> -->
           <!-- DYNAMIC -->
-          <!-- <h4 class="card-title d-inline">Jack Reacher</h4>
+          <!-- <div class="card-body" id="movie-card">
+
+            <h4 class="card-title d-inline">Jack Reacher</h4>
 
 
             <div class="media mt-2">
@@ -157,9 +173,10 @@
                 eligendi autem id alias incidunt libero dolore, nobis, in vel temporibus ipsum. Eum vitae numquam
                 commodi
                 consequatur.</p>
-            </div> -->
+            </div>
+
+          </div> -->
           <!-- END DYNAMIC -->
-          <!-- </div> -->
 
         </div>
 
@@ -169,23 +186,24 @@
   </div>
 
 
-<!-- MODAL FOR IF ALREADY ADDED -->
-<div class="modal fade" id="modal-added" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">This film has already been added to your WatchList</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+  <!-- MODAL FOR IF ALREADY ADDED no longer in use-->
+  <!-- <div class="modal fade" id="modal-added" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">This film has already been added to your WatchList</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Why not choose another film?
+        </div>
+
       </div>
-      <div class="modal-body">
-        Why not choose another film?
-      </div>
-    
     </div>
-  </div>
-</div>
+  </div> -->
 
   <!-- END MODAL ALREADY ADDED -->
 
@@ -212,6 +230,29 @@
   </div>
 
   <!-- END MODAL DELETE -->
+
+  <!-- REQUEST DELETE WHOLE LIST -->
+  <div class="modal fade" id="modal-delete-all" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Are you sure you want to delete <strong>ALL</strong> films from your Watchlist???</h5>
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button> -->
+        </div>
+        <!-- <div id="modal-title-2" class="modal-body"> -->
+        <!-- <p>Movie Title</p> -->
+        <!-- </div> -->
+        <div class="modal-footer">
+          <button id="btn-delete-all" type="button" class="btn btn-light">YES</button>
+          <button id="btn-keep-all" type="button" class="btn btn-dark text-light" data-dismiss="modal">NO</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- END MODAL DELETE ALL -->
 
 
   <footer class="footerStyle text-center my-4">This product uses the TMDb API but is not endorsed or certified by TMDb
