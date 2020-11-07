@@ -15,6 +15,17 @@ const btnClearWatchlist = document.getElementById('btn-clear-watchlist');
 const btnDeleteAll = document.getElementById('btn-delete-all');
 
 
+// ---------------------------------
+// LOCAL STORAGE
+// ---------------------------------
+const storage = new Storage();
+
+document.addEventListener('DOMContentLoaded', loadStorage);
+
+function loadStorage() {
+  storage.getFilmData();
+}
+
 // --------------------------------
 // EVENT LISTENERS
 // --------------------------------
@@ -27,7 +38,6 @@ btnClearWatchlist.addEventListener('click', content.selectDeleteAll);
 btnDeleteAll.addEventListener('click', content.deleteAllWatchlist);
 
 function getSearch(e) {
-  // replace/change these if and else for local storage have for blank and one for the entry already there
   const results = "";
   if (searchMovie.value !== "") {
     const search = searchMovie.value.split(' ').join('+');
@@ -36,7 +46,6 @@ function getSearch(e) {
   } else {
     content.contentMovie(results);
   }
-
   e.preventDefault();
 }
 
@@ -59,11 +68,17 @@ function clickAdd(e) {
     });
     content.deleteAlert(title);
   } else if (e.target.classList.contains('btn-success')) {
+    let genres = [];
     const image = e.target.parentElement.previousElementSibling.src;
     const title = e.target.parentElement.parentElement.previousElementSibling.textContent;
     const types = e.target.parentElement.parentElement.parentElement.nextElementSibling.childNodes;
 
-    content.addToWatchlist(e.target, image, title, types);
+    types.forEach(function (item) {
+      genres.push(item.innerHTML);
+    });
+    content.addToWatchlist(e.target, image, title, genres);
+
+    storage.setFilmData(title, image, genres);
   }
 }
 
@@ -73,4 +88,7 @@ function selectDelete(e) {
     content.deleteAlert(e.target.parentElement.parentElement.textContent);
   }
 }
+
+
+
 

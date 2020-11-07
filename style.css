@@ -1,0 +1,154 @@
+.movieHeader {
+  background-image: url("film.PNG");
+  background-size: cover;
+  font-family: 'Sriracha', cursive;
+}
+
+h1 {
+  font-size: 80px;
+}
+
+label {
+  font-family: 'Secular One', sans-serif;
+  font-size: 20px;
+}
+
+.imageStyle {
+  width: 40%;
+}
+
+.imageThumbnail {
+  width: 20%;
+}
+
+.imageFooter {
+  width: 100px;
+}
+
+.remove {
+  color: red;
+}
+
+.footerStyle {
+  font-size: 10px;
+}
+
+.watchTitle {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+#modal-delete .modal-content {
+  background-color: red;
+  opacity: 0.9;
+  color: black;
+  font-size: 20px;
+}
+
+/* FOR LARGER SCREENS */
+
+@media only screen and (min-width: 540px) {
+  #form-label {
+    font-size: 25px;
+  }
+
+  .imageThumbnail {
+    width: 30%;
+  }
+
+  .media-body h6 {
+    font-size: 20px;
+  }
+
+  .card-text {
+    font-size: 18px;
+  }
+
+  .searchResult {
+    font-size: 20px;
+  }
+  
+  .media-body ul {
+    margin-top: 20px;
+    font-size: 18px;
+  }
+
+  .fa-times-circle {
+    font-size: 25px;
+    margin-top: 20px;
+  }  
+}
+
+/* FOR SMALLER SCREENS */
+
+@media only screen and (max-width: 450px) {
+  #btn-watchlist, #btn-clear-watchlist {
+    width: 45%;
+    font-size: 12px;
+  }
+
+  .media-body h6 {
+    font-size: 13px;
+  }
+
+  .media-body button {
+    font-size: 11px;
+  }
+
+  .imageThumbnail {
+    width: 30%;
+  }
+
+  #watch-card {
+    padding-left: 10px;
+  }
+
+  .fa-times-circle {
+    margin-right: -8px;
+  }
+
+  .watchTitle {
+    font-size: 16px;
+    margin-left: -8px;
+  }
+
+  .media-body ul {
+    margin-top: 20px;
+  }
+
+  .card-title {
+    font-size: 22px;
+  }
+
+  .widthSmall {
+    width: 90vw;
+    margin-left: -30px;
+  }
+
+  .movieHeader {
+    margin-top: 0px !important;
+  }
+
+  .footerStyle {
+    margin-top: 15px !important;
+    margin-bottom: 15px !important;
+  }
+
+  h1 {
+    font-size: 65px;
+  }
+
+  #searched-for {
+    width: 85vw;
+    margin-left: -28px;
+  }
+
+  #searched-for h5 {
+    font-size: 18px;
+  }
+  
+  #all-movies {
+    width: 90vw;
+    margin-left: -30px !important;
+  }
+}

@@ -6,66 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/cyborg/bootstrap.min.css"
     integrity="sha384-nEnU7Ae+3lD52AK+RGNzgieBWMnEfgTbRHIwEvp1XXPdqdO6uLTd/NwXbzboqjc2" crossorigin="anonymous">
-  <!-- <link href="https://fonts.googleapis.com/css2?family=Sriracha&display=swap" rel="stylesheet"> -->
   <link href="https://fonts.googleapis.com/css2?family=Secular+One&family=Sriracha&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/3116385fbd.js" crossorigin="anonymous"></script>
-  <style>
-    .movieHeader {
-      background-image: url("film.PNG");
-      background-size: cover;
-      font-family: 'Sriracha', cursive;
-    }
+  <link rel="stylesheet" type="text/css" href="style.css">
 
-    h1 {
-      font-size: 80px;
-    }
-
-    label {
-      font-family: 'Secular One', sans-serif;
-      font-size: 20px;
-    }
-
-    .imageStyle {
-      width: 40%;
-    }
-
-    .imageThumbnail {
-      width: 20%;
-    }
-
-    .imageFooter {
-      width: 100px;
-    }
-
-    .remove {
-      color: red;
-    }
-
-    .footerStyle {
-      font-size: 10px;
-    }
-
-    .watchTitle {
-      font-weight: bold;
-      font-size: 16px;
-    }
-
-    /* .modal-dialog{
-      background-color: red;
-    } */
-    #modal-delete .modal-content {
-      background-color: red;
-      opacity: 0.9;
-      color: black;
-      font-size: 20px;
-    }
-  </style>
   <title>MyMovies</title>
 </head>
 
 <body>
-
-
 
 
   <div class="container">
@@ -78,10 +26,10 @@
     <div class="row">
       <div class="col-md-7 mx-auto bg-primary p-5 rounded">
         <!-- Form -->
-        <div>
+        <div class="widthSmall">
           <form id="search-form">
             <div class="form-group text-light">
-              <label for="searchMovie">Search for a Movie</label>
+              <label for="searchMovie" class="font-weight-bold" id="form-label">Search for a Movie</label>
               <input type="text" id="search-movie" class="form-control" maxlength="100">
               <br>
               <button class="btn btn-light" id="btn-search">SEARCH</button>
@@ -98,8 +46,7 @@
 
 
         <!-- WatchList -->
-        <!-- HARD CODED -->
-        <div id="accordion">
+        <div id="accordion" class="widthSmall">
           <div class="card mx-auto bg-dark">
             <div class="card-header bg-light" id="headingOne">
               <h5 class="mb-0">
@@ -186,26 +133,7 @@
   </div>
 
 
-  <!-- MODAL FOR IF ALREADY ADDED no longer in use-->
-  <!-- <div class="modal fade" id="modal-added" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">This film has already been added to your WatchList</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          Why not choose another film?
-        </div>
 
-      </div>
-    </div>
-  </div> -->
-
-  <!-- END MODAL ALREADY ADDED -->
 
 
   <!-- MODAL FOR IF REQUEST DELETE -->
@@ -228,7 +156,6 @@
       </div>
     </div>
   </div>
-
   <!-- END MODAL DELETE -->
 
   <!-- REQUEST DELETE WHOLE LIST -->
@@ -236,7 +163,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Are you sure you want to delete <strong>ALL</strong> films from your Watchlist???</h5>
+          <h5 class="modal-title">Are you sure you want to delete <strong>ALL</strong> films from your Watchlist?</h5>
           <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button> -->
@@ -271,7 +198,7 @@
     integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
     crossorigin="anonymous"></script>
 
-  <!-- <script src="storage.js"></script> -->
+  <script src="storage.js"></script>
   <script src="movie.js"></script>
   <script src="content.js"></script>
   <script src="app.js"></script>

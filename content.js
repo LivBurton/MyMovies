@@ -4,13 +4,11 @@ const allMovies = document.getElementById('all-movies');
 
 class Content {
   constructor() {
-    this.watchCard = document.getElementById('watch-card');
     this.titlesWatchlist = [];
   }
 
-  // show movie information from search
+  // ---show movie information from search-----
   contentMovie(results, genres) {
-    // -----------search titles---------------------
     const search = document.getElementById('search-movie');
     const matches = results.total_results;
 
@@ -25,19 +23,19 @@ class Content {
     } else if (results.total_results === 1) {
       searchedFor.innerHTML = `
       <h5>You searched for "${search.value}"</h5>
-      <h5 class="text-light font-italic">There is ${matches} matching result:</h5>
+      <h5 class="text-light font-italic searchResult">There is ${matches} matching result:</h5>
       `;
 
     } else if (results.total_results <= 10) {
       searchedFor.innerHTML = `
       <h5>You searched for "${search.value}"</h5>
-      <h5 class="text-light font-italic">There are ${matches} matching results:</h5>
+      <h5 class="text-light font-italic searchResult">There are ${matches} matching results:</h5>
       `;
 
     } else {
       searchedFor.innerHTML = `
       <h5>You searched for "${search.value}"</h5>
-      <h6 class="text-light">There are ${matches} matching results. Here are the first 10. You could try adding another word?</h6>
+      <h6 class="text-light searchResult">There are ${matches} matching results. Here are the first 10. You could try adding another word?</h6>
       `;
     }
 
@@ -61,12 +59,12 @@ class Content {
     }
 
     for (let i = 0; i < x; i++) {
-      // to set ID of button
+      // ----to set ID of button------
       const btnId = results.results[i].title.split(' ').join('');
 
       allMovies.innerHTML += `
       <div class="card-body border-top">
-        <h4 class="card-title d-inline listTitle">${results.results[i].title}</h4>
+        <h4 class="card-title d-inline listTitle font-weight-bold">${results.results[i].title}</h4>
         <div class="media mt-2">
           <img class="mr-3 mt-1 imageStyle"
           src="https://image.tmdb.org/t/p/original${results.results[i].poster_path}">
@@ -83,16 +81,23 @@ class Content {
       </div>
 `;
 
+      if (this.titlesWatchlist.length > 0) {
+        this.titlesWatchlist.forEach(function (film) {
+          if (film === results.results[i].title) {
+            content.changeBtnAdd(btnId, true);
+          }
+        });
+      }
+
       const ul = document.createElement('ul');
       ul.className = 'px-2';
 
-      // loop through here for the genres adding li
+      //  ----add the genres-------
       for (let j = 0; j < genres.genres.length; j++) {
         for (let k = 0; k < results.results[i].genre_ids.length; k++) {
           if (genres.genres[j].id === results.results[i].genre_ids[k]) {
             const li = document.createElement('li');
             li.appendChild(document.createTextNode(genres.genres[j].name));
-            // console.log(genres);
             li.className = ' badge badge-pill badge-primary py-2 px-3 mx-2 mb-3';
             ul.appendChild(li);
           }
@@ -102,62 +107,29 @@ class Content {
 
       allMovies.innerHTML += `
 <div class="mx-3 mb-4">
-<h5 class="card-title mb-2 mt-0">Summary</h5>
+<h5 class="card-title mb-2 mt-0 font-weight-bold">Summary</h5>
 <p class="card-text">${results.results[i].overview}</p>
 </div>
 `;
     }
   }
 
-  // add to this.titleswatchlist array-----------------------------------------------
+  // -------add to titleswatchlist array---------
   addToWatchlist(btn, image, title, types) {
-    // console.log(btn, image, title, types);
     if (btn.classList.contains('btn-danger')) {
       this.changeBtnAdd(btn.id, false);
     } else {
       this.titlesWatchlist.push(title);
+
       this.addToDropDown(image, title, types);
-      // console.log(btn.id);
+
       this.changeBtnAdd(btn.id, true);
     }
-
-
-
-    // need to loop through the watchlist and check not already there
-
-    // START OF ORIGINAL-----------
-    // let i = 0;
-
-
-    // if (this.titlesWatchlist.length === 0) {
-    //   this.titlesWatchlist.push(title);
-    //   this.addToDropDown(image, title, types);
-    //    // change button classes here
-    //   // this.changeBtnAdd(true, title);
-    // } else {
-    //   this.titlesWatchlist.forEach(function (item) {
-
-    //     if (item === title) {
-    //       // console.log('already added');
-    //       $('#modal-added').modal('show')
-    //       i++;
-    //     }
-
-    //   });
-    //   if (i === 0) {
-    //     this.titlesWatchlist.push(title);
-    //     this.addToDropDown(image, title, types);
-    //   }
-    //   // console.log(this.titlesWatchlist);
-    // }
-
-    // END OF ORIGINAL
   }
 
 
-  //---------add to the wishlist dropdown if not already there
-  addToDropDown(image, title, types) {
-
+  //---------add to the watchlist dropdown if not already there-----
+  addToDropDown(image, title, genres) {
     if (this.titlesWatchlist.length === 1) {
       watchCard.innerHTML = '';
     }
@@ -170,30 +142,21 @@ class Content {
           
           </div>
           </div>
-
 `;
 
     const ul = document.createElement('ul');
     ul.className = 'px-2';
 
-
-    types.forEach(function (type) {
-      const genre = type.innerText;
-
+    genres.forEach(function (type) {
       const li = document.createElement('li');
-      li.appendChild(document.createTextNode(genre));
-      li.className = ' mt-1 badge badge-pill badge-primary py-2 px-3 mr-2';
+      li.appendChild(document.createTextNode(type));
+      li.className = ' mt-1 badge badge-pill badge-primary py-2 px-3 mr-2 my-1';
       ul.appendChild(li);
-
     });
 
     const mediaBody = document.getElementById(image);
     mediaBody.appendChild(ul);
   }
-
-
-
-  // ---------DELETE ALERT OR NOT
 
   deleteAlert(title) {
     const modalTitle = document.getElementById('modal-title');
@@ -208,6 +171,8 @@ class Content {
     const remove = document.querySelector('.remove-div');
     const modalTitle = document.getElementById('modal-title');
 
+    const removeTitle = remove.children[1].children[0].innerText;
+
     const titleString = modalTitle.firstChild.textContent;
     const btnId = titleString.split(' ').join('');
 
@@ -216,6 +181,7 @@ class Content {
       content.titlesWatchlist.splice(index, 1);
     }
     $('#modal-delete').modal('hide')
+    storage.deleteFromLocal(removeTitle);
     remove.remove();
 
     content.changeBtnAdd(btnId, false);
@@ -234,11 +200,9 @@ class Content {
   changeBtnAdd(btnId, added) {
     const btn = document.getElementById(btnId);
     if (added) {
-
       btn.className = 'btn btn-danger mt-4 d-block';
       btn.textContent = 'Remove from Watchlist'
-
-    } else if (added === false) {
+    } else if (btn !== null && added === false) {
       btn.className = 'btn btn-success mt-4 d-block';
       btn.textContent = 'Add to Watchlist'
     }
@@ -255,7 +219,8 @@ class Content {
     $('#modal-delete-all').modal('hide')
     watchCard.innerHTML = `<h6 id="empty-title">Your WatchList is empty</h6>`;
     content.titlesWatchlist = [];
-    console.log(content.titlesWatchlist);
+
+    localStorage.clear();
 
     const btns = document.getElementsByClassName('btn-danger');
     const btnArray = [];
