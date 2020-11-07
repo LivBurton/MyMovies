@@ -14,6 +14,9 @@ const btnKeep = document.getElementById('btn-keep');
 const btnClearWatchlist = document.getElementById('btn-clear-watchlist');
 const btnDeleteAll = document.getElementById('btn-delete-all');
 
+$('form').on('submit', function() {
+  $('input').blur();
+});
 
 // ---------------------------------
 // LOCAL STORAGE
